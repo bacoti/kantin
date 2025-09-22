@@ -6,13 +6,12 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import { useCart } from "@/context/CartContext";
 
-export default function Authenticated({ auth = null, header, children }) {
+export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
     const { cartItems } = useCart();
 
-    // Provide safe defaults in case `auth` or `auth.user` is not available yet
-    const user = auth?.user ?? null;
+    const user = auth.user; // Sekarang 'auth.user' pasti ada jika sudah login
     const totalItems = (cartItems || []).reduce(
         (sum, item) => sum + (item.quantity || 0),
         0
@@ -37,6 +36,8 @@ export default function Authenticated({ auth = null, header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
+                                
+                                {/* KONDISI UNTUK MENAMPILKAN MENU ADMIN */}
                                 {user?.role === "admin" && (
                                     <>
                                         <NavLink
@@ -117,7 +118,6 @@ export default function Authenticated({ auth = null, header, children }) {
                                         >
                                             Profile
                                         </Dropdown.Link>
-                                        {/* LINK BARU */}
                                         <Dropdown.Link
                                             href={route("orders.index")}
                                         >
@@ -230,10 +230,10 @@ export default function Authenticated({ auth = null, header, children }) {
                     <div className="pt-4 pb-1 border-t border-gray-200">
                         <div className="px-4">
                             <div className="font-medium text-base text-gray-800">
-                                {user?.name || "Guest"}
+                                {user?.name}
                             </div>
                             <div className="font-medium text-sm text-gray-500">
-                                {user?.email || ""}
+                                {user?.email}
                             </div>
                         </div>
 
@@ -241,7 +241,6 @@ export default function Authenticated({ auth = null, header, children }) {
                             <ResponsiveNavLink href={route("profile.edit")}>
                                 Profile
                             </ResponsiveNavLink>
-                            {/* LINK BARU (MOBILE) */}
                             <ResponsiveNavLink href={route("orders.index")}>
                                 Riwayat Pesanan
                             </ResponsiveNavLink>
