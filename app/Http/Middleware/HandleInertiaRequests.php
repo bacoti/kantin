@@ -4,7 +4,8 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
-use Tightenco\Ziggy\Ziggy;
+
+use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -32,15 +33,14 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'auth' => [
-                // MODIFIKASI DI SINI:
-                // Kita akan secara eksplisit menyertakan 'role'
                 'user' => $request->user() ? [
                     'id' => $request->user()->id,
                     'name' => $request->user()->name,
                     'email' => $request->user()->email,
-                    'role' => $request->user()->role, // <-- BARIS INI YANG MEMPERBAIKI MASALAH
+                    'role' => $request->user()->role,
                 ] : null,
             ],
+            // PASTIKAN BLOK INI JUGA SAMA
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->route()->getName(),

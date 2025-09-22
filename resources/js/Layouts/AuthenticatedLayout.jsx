@@ -3,13 +3,14 @@ import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { useCart } from "@/context/CartContext";
 
-export default function Authenticated({ auth, header, children }) {
+export default function Authenticated({ header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
     const { cartItems } = useCart();
+    const { auth } = usePage().props;
 
     const user = auth.user; // Sekarang 'auth.user' pasti ada jika sudah login
     const totalItems = (cartItems || []).reduce(
