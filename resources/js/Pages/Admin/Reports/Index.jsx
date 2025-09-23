@@ -1,5 +1,3 @@
-// resources/js/Pages/Admin/Reports/Index.jsx
-
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
@@ -7,6 +5,7 @@ import SalesChart from '@/Components/SalesChart';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
+import { Download } from 'lucide-react';
 
 export default function Index({ auth, orders, filters }) {
     const { data, setData, get } = useForm({
@@ -56,6 +55,12 @@ export default function Index({ auth, orders, filters }) {
                                     />
                                 </div>
                                 <Button type="submit">Filter</Button>
+                                <Button variant="outline" asChild>
+                                    <a href={route('admin.reports.export-excel', { start_date: data.start_date, end_date: data.end_date })}>
+                                        <Download className="mr-2 h-4 w-4" />
+                                        Export
+                                    </a>
+                                </Button>
                             </form>
                         </CardContent>
                     </Card>

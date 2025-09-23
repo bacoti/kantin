@@ -2,23 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\SalesReportExport; // <--- TAMBAHKAN INI
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel; // <--- TAMBAHKAN INI
 
 class ReportController extends Controller
 {
-    /**
-     * Menampilkan halaman laporan penjualan.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Inertia\Response
-     */
     public function index(Request $request)
     {
-        // Validasi input tanggal jika diperlukan
         $request->validate([
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
@@ -26,12 +21,11 @@ class ReportController extends Controller
 
         $orders = Order::with('user')
             ->when($request->filled('start_date') && $request->filled('end_date'), function ($query) use ($request) {
-                // Pastikan untuk mencakup keseluruhan hari pada end_date
                 $query->whereBetween('created_at', [$request->start_date . ' 00:00:00', $request->end_date . ' 23:59:59']);
             })
             ->latest()
             ->paginate(10)
-            ->withQueryString(); // Menambahkan ini agar paginasi tetap membawa filter
+            ->withQueryString();
 
         return Inertia::render('Admin/Reports/Index', [
             'orders' => $orders,
@@ -39,15 +33,8 @@ class ReportController extends Controller
         ]);
     }
 
-    /**
-     * Mengambil data penjualan untuk visualisasi grafik.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function getSalesChartData(Request $request)
     {
-        // Validasi input tanggal jika diperlukan
         $request->validate([
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
@@ -58,10 +45,8 @@ class ReportController extends Controller
             DB::raw('SUM(total_price) as total')
         )
         ->when($request->filled('start_date') && $request->filled('end_date'), function ($query) use ($request) {
-            // Pastikan untuk mencakup keseluruhan hari pada end_date
             $query->whereBetween('created_at', [$request->start_date . ' 00:00:00', $request->end_date . ' 23:59:59']);
         }, function ($query) {
-            // Default: tampilkan data 30 hari terakhir jika tidak ada filter
             $query->where('created_at', '>=', now()->subDays(30));
         })
         ->groupBy('date')
@@ -69,5 +54,17 @@ class ReportController extends Controller
         ->get();
 
         return response()->json($salesData);
+    }
+
+    /**
+     * Menangani ekspor laporan penjualan ke Excel.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function exportExcel(Request $request)
+    {
+        $fileName = 'Laporan_Penjualan_' . now()->format('d-m-Y_H-i-s') . '.xlsx';
+        return Excel::download(new SalesReportExport($request), $fileName);
     }
 }
