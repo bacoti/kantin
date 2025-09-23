@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Product;
 use App\Http\Controllers\Api\OrderController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -41,3 +42,7 @@ Route::withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class])->post('/
 
 // Test endpoint for order history without auth
 Route::get('/orders-history-test', [OrderController::class, 'indexTest']);
+
+// Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+//     Route::get('/reports/sales-chart', [ReportController::class, 'getSalesChartData'])->name('reports.sales-chart');
+// });

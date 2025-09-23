@@ -37,7 +37,7 @@ export default function Authenticated({ header, children }) {
                                 >
                                     Dashboard
                                 </NavLink>
-                                
+
                                 {/* KONDISI UNTUK MENAMPILKAN MENU ADMIN */}
                                 {user?.role === "admin" && (
                                     <>
@@ -56,6 +56,9 @@ export default function Authenticated({ header, children }) {
                                             )}
                                         >
                                             Products
+                                        </NavLink>
+                                        <NavLink href={route('admin.reports.index')} active={route().current('admin.reports.index')}>
+                                            Reports
                                         </NavLink>
                                     </>
                                 )}

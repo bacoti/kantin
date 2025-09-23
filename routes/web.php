@@ -88,6 +88,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Product management routes
     Route::resource('products', App\Http\Controllers\Admin\ProductController::class);
+
+    Route::get('/reports', [\App\Http\Controllers\Admin\ReportController::class, 'index'])->name('reports.index');
+
+    Route::get('/reports/sales-chart-data', [\App\Http\Controllers\Admin\ReportController::class, 'getSalesChartData'])->name('reports.sales-chart-data');
 });
 
 require __DIR__.'/auth.php';
