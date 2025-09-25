@@ -28,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Tambahkan alias untuk AdminMiddleware
         $middleware->alias([
             'admin' => AdminMiddleware::class,
+            'manager' => \App\Http\Middleware\ManagerMiddleware::class, 
         ]);
 
     })

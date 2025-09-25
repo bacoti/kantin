@@ -12,7 +12,7 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'total_price',
-        'status',
+        'status', // <-- Tambahkan baris ini
     ];
 
     public function user()
@@ -25,4 +25,3 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class);
     }
 }
-

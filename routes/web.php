@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Http\Controllers\Manager\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +95,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/reports/sales-chart-data', [\App\Http\Controllers\Admin\ReportController::class, 'getSalesChartData'])->name('reports.sales-chart-data');
 
     Route::get('/reports/export-excel', [\App\Http\Controllers\Admin\ReportController::class, 'exportExcel'])->name('reports.export-excel');
+});
+
+
+Route::middleware(['auth', 'verified', 'manager'])->prefix('manager')->name('manager.')->group(function () {
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::put('/orders/{order}', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
 });
 
 require __DIR__.'/auth.php';
