@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['customer', 'admin'])->default('customer')->after('email');
+            // Sertakan 'manager' agar environment sqlite/testing bisa membuat user manager
+            $table->enum('role', ['customer', 'admin', 'manager'])->default('customer')->after('email');
         });
     }
 

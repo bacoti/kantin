@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Manager;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class OrderController extends Controller
@@ -26,6 +27,7 @@ class OrderController extends Controller
 
         $order->update(['status' => $request->status]);
 
+        // Untuk Inertia requests, kembalikan back() dengan flash message
         return back()->with('success', 'Status pesanan berhasil diperbarui.');
     }
 }
