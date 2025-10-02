@@ -159,7 +159,7 @@ export default function Index({ users, filters, roles, flash }) {
                                         <Search className="w-4 h-4" />
                                     </Button>
                                 </form>
-                                
+
                                 <div className="flex gap-2">
                                     <Select value={roleFilter || 'all'} onValueChange={handleRoleFilter}>
                                         <SelectTrigger className="w-48">
@@ -174,7 +174,7 @@ export default function Index({ users, filters, roles, flash }) {
                                             ))}
                                         </SelectContent>
                                     </Select>
-                                    
+
                                     {(search || roleFilter) && (
                                         <Button variant="outline" onClick={clearFilters}>
                                             Clear
@@ -277,11 +277,11 @@ export default function Index({ users, filters, roles, flash }) {
 
             {/* Delete Confirmation Modal */}
             {showDeleteModal && (
-                <div 
+                <div
                     className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
                     onClick={handleDeleteCancel}
                 >
-                    <div 
+                    <div
                         className="bg-white rounded-lg p-6 max-w-md w-full mx-4"
                         onClick={(e) => e.stopPropagation()}
                     >
@@ -298,7 +298,7 @@ export default function Index({ users, filters, roles, flash }) {
                                 </p>
                             </div>
                         </div>
-                        
+
                         <div className="mb-6">
                             <p className="text-gray-700">
                                 Apakah Anda yakin ingin menghapus pengguna{' '}
@@ -311,7 +311,7 @@ export default function Index({ users, filters, roles, flash }) {
                                 Data pengguna dan semua informasi terkait akan dihapus secara permanen.
                             </p>
                         </div>
-                        
+
                         <div className="flex justify-end space-x-3">
                             <Button
                                 variant="outline"

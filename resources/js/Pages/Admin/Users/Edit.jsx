@@ -35,7 +35,7 @@ export default function Edit({ user, roles }) {
 
     const submit = (e) => {
         e.preventDefault();
-        
+
         // Create form data with basic fields
         const formData = {
             name: data.name,

@@ -16,7 +16,7 @@ const roleIcons = {
 
 const roleLabels = {
     customer: "Customer",
-    admin: "Admin", 
+    admin: "Admin",
     manager: "Manager"
 };
 
