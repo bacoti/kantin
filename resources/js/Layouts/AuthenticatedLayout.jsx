@@ -58,6 +58,14 @@ export default function Authenticated({ header, children }) {
                                             Products
                                         </NavLink>
                                         <NavLink
+                                            href={route("admin.users.index")}
+                                            active={route().current(
+                                                "admin.users.*"
+                                            )}
+                                        >
+                                            Users
+                                        </NavLink>
+                                        <NavLink
                                             href={route("admin.reports.index")}
                                             active={route().current(
                                                 "admin.reports.index"
@@ -159,6 +167,13 @@ export default function Authenticated({ header, children }) {
                                                 >
                                                     Manage Products
                                                 </Dropdown.Link>
+                                                <Dropdown.Link
+                                                    href={route(
+                                                        "admin.users.index"
+                                                    )}
+                                                >
+                                                    Manage Users
+                                                </Dropdown.Link>
                                             </>
                                         )}
                                         <Dropdown.Link
@@ -243,6 +258,12 @@ export default function Authenticated({ header, children }) {
                                 >
                                     Manage Products
                                 </ResponsiveNavLink>
+                                <ResponsiveNavLink
+                                    href={route("admin.users.index")}
+                                    active={route().current("admin.users.*")}
+                                >
+                                    Manage Users
+                                </ResponsiveNavLink>
                             </>
                         )}
                     </div>
@@ -275,6 +296,11 @@ export default function Authenticated({ header, children }) {
                                         href={route("admin.products.index")}
                                     >
                                         Manage Products
+                                    </ResponsiveNavLink>
+                                    <ResponsiveNavLink
+                                        href={route("admin.users.index")}
+                                    >
+                                        Manage Users
                                     </ResponsiveNavLink>
                                 </>
                             )}
